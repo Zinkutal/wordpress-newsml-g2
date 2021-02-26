@@ -1,24 +1,24 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => 'dev-master',
-    'version' => 'dev-master',
+    'pretty_version' => '1.2.7.x-dev',
+    'version' => '1.2.7.9999999-dev',
     'aliases' => 
     array (
     ),
-    'reference' => '26d38d248429df628ef402742f8c6202105cbc30',
+    'reference' => '903d410de6109753636618a634fdc9defb68199c',
     'name' => 'cra/wordpress-newsml-g2',
   ),
   'versions' => 
   array (
     'cra/wordpress-newsml-g2' => 
     array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
+      'pretty_version' => '1.2.7.x-dev',
+      'version' => '1.2.7.9999999-dev',
       'aliases' => 
       array (
       ),
-      'reference' => '26d38d248429df628ef402742f8c6202105cbc30',
+      'reference' => '903d410de6109753636618a634fdc9defb68199c',
     ),
     'paragonie/constant_time_encoding' => 
     array (
@@ -31,21 +31,21 @@
     ),
     'paragonie/random_compat' => 
     array (
-      'pretty_version' => 'v2.0.19',
-      'version' => '2.0.19.0',
+      'pretty_version' => 'v9.99.100',
+      'version' => '9.99.100.0',
       'aliases' => 
       array (
       ),
-      'reference' => '446fc9faa5c2a9ddf65eb7121c0af7e857295241',
+      'reference' => '996434e5492cb4c3edcb9168db6fbb1359ef965a',
     ),
     'phpseclib/phpseclib' => 
     array (
-      'pretty_version' => '3.0.3',
-      'version' => '3.0.3.0',
+      'pretty_version' => '3.0.5',
+      'version' => '3.0.5.0',
       'aliases' => 
       array (
       ),
-      'reference' => '97a5a270e4a9ebfc1a7e2f462e917cbce1a8e6d9',
+      'reference' => '7c751ea006577e4c2e83326d90c8b1e8c11b8ede',
     ),
   ),
 );
