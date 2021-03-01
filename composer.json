@@ -1,7 +1,7 @@
 {
-    "name": "cra/wordpress-newsml-g2",
+    "name": "wordpress/newsml-g2",
     "description": "Imports NewsML-G2 data and makes them accessible from your Wordpress installation",
-    "type": "library",
+    "type": "wordpress-plugin",
     "require": {
         "phpseclib/phpseclib": "^3.0.3"
     },

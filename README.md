@@ -3,7 +3,7 @@
 Imports NewsML-G2 data and makes them accessible from your Wordpress installation.  
 
 * Requires at least: 5.0  
-* PHP: 7.3 
+* PHP: 7.4 
 * Tested up to: 5.6  
 * License: GPLv2  
 
@@ -75,6 +75,8 @@ Contact me!
 * Added autoloader support
 ### 1.2.7
 * Added phpcs && gh actions check
+### 1.2.8
+* Updated composer info
 
 ## Upgrade Notice
 
