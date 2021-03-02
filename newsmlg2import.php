@@ -6,7 +6,7 @@
  * NewsML Post which is accessible via http://your.blog/news. The access to the NewsML-G2 files is possbile via HTTP
  * and FTP. Every 5 minutes the folder is parsed again and the news get updated. <strong>Warning: </strong>
  * After the activation of the plugin you will be redirected to the settings to configure the plugin.
- * Version: 1.2.8
+ * Version: 1.2.9
  * Author: Bernhard Punz & contributors
  * Author URI: -
  * License: GPLv2
@@ -30,7 +30,7 @@ $desc = __(
 defined('ABSPATH') or die('Plugin file cannot be accessed directly.');
 define('NEWSML_FILE', __FILE__);
 define('NEWSML_DIR', __DIR__);
-define('NEWSML_IMAGE_DIR', 'wp-content/uploads/newsml-images');
+define('NEWSML_IMAGE_DIR', trailingslashit(wp_upload_dir()['basedir']) . 'newsml-images');
 
 use NewsML_G2\Plugin\FileAccess\FileAccessFTP;
 use NewsML_G2\Plugin\FileAccess\FileAccessHTTP;
@@ -905,10 +905,10 @@ class NewsMLG2Plugin
 
         $result = get_option($this->option_name);
 
-        if (!file_exists($this->_home_path . $result['image_dir'])
-            && !mkdir($concurrentDirectory = $this->_home_path . $result['image_dir'])
-            && !is_dir($concurrentDirectory)) {
-            throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+        if (!file_exists(NEWSML_IMAGE_DIR)) {
+            if (!wp_mkdir_p(NEWSML_IMAGE_DIR)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', NEWSML_IMAGE_DIR));
+            }
         }
 
         // Register the taxonomny newsml_mediatopics

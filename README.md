@@ -77,6 +77,8 @@ Contact me!
 * Added phpcs && gh actions check
 ### 1.2.8
 * Updated composer info
+### 1.2.9
+* Fatal error fix on plugin activation
 
 ## Upgrade Notice
 
