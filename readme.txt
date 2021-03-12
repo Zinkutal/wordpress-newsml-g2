@@ -97,6 +97,9 @@ Contact me!
 = 1.2.9 =
 * Fatal error fix on plugin activation
 
+= 1.2.10 =
+* Session start notice fix
+
 == Upgrade Notice ==
 
 = 1.0 =
