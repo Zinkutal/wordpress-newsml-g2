@@ -6,7 +6,7 @@
  * NewsML Post which is accessible via http://your.blog/news. The access to the NewsML-G2 files is possbile via HTTP
  * and FTP. Every 5 minutes the folder is parsed again and the news get updated. <strong>Warning: </strong>
  * After the activation of the plugin you will be redirected to the settings to configure the plugin.
- * Version: 1.2.9
+ * Version: 1.2.10
  * Author: Bernhard Punz & contributors
  * Author URI: -
  * License: GPLv2
@@ -18,7 +18,9 @@ namespace NewsML_G2\Plugin;
 
 require plugin_dir_path(__FILE__) . 'vendor/autoload.php';
 
-session_start();
+if (!session_id()) {
+    session_start(['read_and_close' => true]);
+}
 ini_set('max_execution_time', 0);
 
 // Used for the german translation of the plugin description
