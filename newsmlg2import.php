@@ -477,11 +477,11 @@ class NewsMLG2Plugin
                     add_post_meta($new_post_id, 'newsml_meta_location', implode(', ', $locations));
                 }
 
-                $access->save_media_files($this->_home_path . $result['image_dir'], $object->get_multimedia());
+                $access->save_media_files($result['image_dir'], $object->get_multimedia());
                 $multis = $object->get_multimedia();
                 foreach ($multis as $file) {
                     media_sideload_image(
-                        home_url() . '/' . $result['image_dir'] . '/' . $file['href'],
+                        $result['image_dir'] . '/' . $file['href'],
                         $new_post_id,
                         'image for ' . $object->get_title()
                     );
@@ -510,11 +510,11 @@ class NewsMLG2Plugin
 
         // Remove the temp and newsml-images directories.
         $access->recursive_rmdir();
-        $access->recursive_rmdir($this->_home_path . $result['image_dir']);
+        $access->recursive_rmdir($result['image_dir']);
 
         // Recreate the newsml-images directory
-        if (!file_exists($this->_home_path . $result['image_dir'])) {
-            if (!mkdir($concurrentDirectory = $this->_home_path . $result['image_dir'], 0755)
+        if (!file_exists($result['image_dir'])) {
+            if (!mkdir($concurrentDirectory = $result['image_dir'], 0755)
                 && !is_dir($concurrentDirectory)) {
                 throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
             }
