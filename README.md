@@ -4,7 +4,7 @@ Imports NewsML-G2 data and makes them accessible from your Wordpress installatio
 
 * Requires at least: 5.0  
 * PHP: 7.4 
-* Tested up to: 5.6  
+* Tested up to: 5.7
 * License: GPLv2  
 
 ## Official wordpress.org downloadlink
@@ -81,6 +81,11 @@ Contact me!
 * Fatal error fix on plugin activation
 ### 1.2.10
 * Session start notice fix
+### 1.2.11
+* Added dynamic mediatopic generation
+* Updated guid usage on import vs title
+* Updated innodata mappings
+* Fixed images dir logic
 
 ## Upgrade Notice
 

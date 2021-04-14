@@ -2,7 +2,7 @@
 Contributors: BernhardPunz, ced99, mephinet, avdkucherov
 Tags: NewsML-G2, import, APA, IPTC
 Requires at least: 5.0
-Tested up to: 5.6.2
+Tested up to: 5.7
 Stable tag: 1.2.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -99,6 +99,12 @@ Contact me!
 
 = 1.2.10 =
 * Session start notice fix
+
+= 1.2.11 =
+* Added dynamic mediatopic generation
+* Updated guid usage on import vs title
+* Updated innodata mappings
+* Fixed images dir logic
 
 == Upgrade Notice ==
 
