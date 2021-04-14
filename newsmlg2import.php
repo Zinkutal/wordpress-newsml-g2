@@ -530,7 +530,7 @@ class NewsMLG2Plugin
      */
     public function get_id_from_guid($guid){
         global $wpdb;
-        return $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid=%s", $guid ) );
+        return $wpdb->get_var($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE guid=%s", $guid));
     }
 
     /**
