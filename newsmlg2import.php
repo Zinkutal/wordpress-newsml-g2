@@ -388,7 +388,7 @@ class NewsMLG2Plugin
             );
 
             // Check if post exists.
-            if ($post = get_page_by_title($object->get_title(), OBJECT, 'newsml_post')) {
+            if ($post = get_post($this->get_id_from_guid($object->get_guid()), OBJECT, 'newsml_post')) {
                 if (!$result['publish_posts'] && (get_post_status($post->ID) !== 'draft')) {
                     // Update existing post.
                     $post_data['ID'] = $post->ID;
@@ -519,6 +519,18 @@ class NewsMLG2Plugin
                 throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
             }
         }
+    }
+
+    /**
+     * Returns id for provided guid.
+     *
+     * @param mixed $guid Provided guid.
+     * @return mixed Post id.
+     * @author Alexander Kucherov
+     */
+    public function get_id_from_guid($guid){
+        global $wpdb;
+        return $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid=%s", $guid ) );
     }
 
     /**

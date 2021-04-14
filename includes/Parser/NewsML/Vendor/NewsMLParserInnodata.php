@@ -96,11 +96,35 @@ class NewsMLParserInnodata extends NewsMLParser
      */
     public function get_guid_from_newsml($xml)
     {
-        if ($guid = parent::get_guid_from_newsml($xml)) {
+        if ($guid = $this->get_meta_id_from_newsml($xml)) {
             return $guid;
         }
 
         return sha1(json_encode(@simplexml_load_string($xml)));
+    }
+
+    /**
+     * Gets the meta id from the XML and returns it as XML string.
+     * @param \DOMDocument $xml The DOM Tree of the file to parse.
+     *
+     * @return string The meta id if found, otherwise an empty string.
+     * @since 1.2.11
+     * @author Alexander Kucherov
+     */
+    public function get_meta_id_from_newsml($xml)
+    {
+        $xpath = $this->generate_xpath_on_xml($xml);
+
+        $query_itemmeta = '//tempNS:itemMeta';
+        $result_itemmeta = $xpath->query($query_itemmeta);
+
+        if ($item = $result_itemmeta->item(0)) {
+            if ($itemmeta= $item->getAttribute('id')) {
+                return $itemmeta;
+            }
+        }
+
+        return '';
     }
 
     /**
