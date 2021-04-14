@@ -429,6 +429,14 @@ class NewsMLG2Plugin
                         if (!$this->data['allow_media_topics']) {
                             if ($term = get_term_by('name', $topic, 'newsml_mediatopic')) {
                                 $tax_ids[] = $term->term_id;
+                            } else if ($term === false) {
+                                // Create missing topic.
+                                $new_term = wp_insert_term($topic, 'newsml_mediatopic');
+                                if (is_array($new_term) && isset($new_term['term_id'])) {
+                                    $tax_ids[] = $term['term_id'];
+                                } else {
+                                    error_log('Unable to create term `' . $term . '` for `newsml_mediatopic` taxonomy', 0);
+                                }
                             }
                         } else {
                             $res_parent = $wpdb->get_row(
