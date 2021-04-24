@@ -6,7 +6,7 @@
  * NewsML Post which is accessible via http://your.blog/news. The access to the NewsML-G2 files is possbile via HTTP
  * and FTP. Every 5 minutes the folder is parsed again and the news get updated. <strong>Warning: </strong>
  * After the activation of the plugin you will be redirected to the settings to configure the plugin.
- * Version: 1.2.10
+ * Version: 1.2.12
  * Author: Bernhard Punz & contributors
  * Author URI: -
  * License: GPLv2
@@ -388,7 +388,8 @@ class NewsMLG2Plugin
             );
 
             // Check if post exists.
-            if ($post = get_page_by_title($object->get_title(), OBJECT, 'newsml_post')) {
+            $post = get_post($this->get_id_from_guid($object->get_guid()), OBJECT, 'newsml_post') ?: get_page_by_title($object->get_title(), OBJECT, 'newsml_post');
+            if ($post) {
                 if (!$result['publish_posts'] && (get_post_status($post->ID) !== 'draft')) {
                     // Update existing post.
                     $post_data['ID'] = $post->ID;
@@ -429,6 +430,14 @@ class NewsMLG2Plugin
                         if (!$this->data['allow_media_topics']) {
                             if ($term = get_term_by('name', $topic, 'newsml_mediatopic')) {
                                 $tax_ids[] = $term->term_id;
+                            } else if ($term === false) {
+                                // Create missing topic.
+                                $new_term = wp_insert_term($topic, 'newsml_mediatopic');
+                                if (is_array($new_term) && isset($new_term['term_id'])) {
+                                    $tax_ids[] = $term['term_id'];
+                                } else {
+                                    error_log('Unable to create term `' . $term . '` for `newsml_mediatopic` taxonomy', 0);
+                                }
                             }
                         } else {
                             $res_parent = $wpdb->get_row(
@@ -469,11 +478,11 @@ class NewsMLG2Plugin
                     add_post_meta($new_post_id, 'newsml_meta_location', implode(', ', $locations));
                 }
 
-                $access->save_media_files($this->_home_path . $result['image_dir'], $object->get_multimedia());
+                $access->save_media_files($result['image_dir'], $object->get_multimedia());
                 $multis = $object->get_multimedia();
                 foreach ($multis as $file) {
                     media_sideload_image(
-                        home_url() . '/' . $result['image_dir'] . '/' . $file['href'],
+                        $result['image_dir'] . '/' . $file['href'],
                         $new_post_id,
                         'image for ' . $object->get_title()
                     );
@@ -502,15 +511,27 @@ class NewsMLG2Plugin
 
         // Remove the temp and newsml-images directories.
         $access->recursive_rmdir();
-        $access->recursive_rmdir($this->_home_path . $result['image_dir']);
+        $access->recursive_rmdir($result['image_dir']);
 
         // Recreate the newsml-images directory
-        if (!file_exists($this->_home_path . $result['image_dir'])) {
-            if (!mkdir($concurrentDirectory = $this->_home_path . $result['image_dir'], 0755)
+        if (!file_exists($result['image_dir'])) {
+            if (!mkdir($concurrentDirectory = $result['image_dir'], 0755)
                 && !is_dir($concurrentDirectory)) {
                 throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
             }
         }
+    }
+
+    /**
+     * Returns id for provided guid.
+     *
+     * @param mixed $guid Provided guid.
+     * @return mixed Post id.
+     * @author Alexander Kucherov
+     */
+    public function get_id_from_guid($guid){
+        global $wpdb;
+        return $wpdb->get_var($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE guid=%s", $guid));
     }
 
     /**
