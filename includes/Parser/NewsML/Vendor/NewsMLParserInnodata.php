@@ -209,7 +209,7 @@ class NewsMLParserInnodata extends NewsMLParser
 
         if ($item = $result_description->item(0)) {
             if ($description = strip_tags($item->C14N() ?: '', '<a>')) {
-                return $description;
+                return nl2br($description);
             }
         }
 

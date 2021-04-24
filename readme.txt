@@ -106,6 +106,10 @@ Contact me!
 * Updated innodata mappings
 * Fixed images dir logic
 
+### 1.2.12
+* Fixed duplicates import
+* Added nl2br for descriptions imported from innodata
+
 == Upgrade Notice ==
 
 = 1.0 =

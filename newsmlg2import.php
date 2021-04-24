@@ -6,7 +6,7 @@
  * NewsML Post which is accessible via http://your.blog/news. The access to the NewsML-G2 files is possbile via HTTP
  * and FTP. Every 5 minutes the folder is parsed again and the news get updated. <strong>Warning: </strong>
  * After the activation of the plugin you will be redirected to the settings to configure the plugin.
- * Version: 1.2.11
+ * Version: 1.2.12
  * Author: Bernhard Punz & contributors
  * Author URI: -
  * License: GPLv2
@@ -388,7 +388,8 @@ class NewsMLG2Plugin
             );
 
             // Check if post exists.
-            if ($post = get_post($this->get_id_from_guid($object->get_guid()), OBJECT, 'newsml_post')) {
+            $post = get_post($this->get_id_from_guid($object->get_guid()), OBJECT, 'newsml_post') ?: get_page_by_title($object->get_title(), OBJECT, 'newsml_post');
+            if ($post) {
                 if (!$result['publish_posts'] && (get_post_status($post->ID) !== 'draft')) {
                     // Update existing post.
                     $post_data['ID'] = $post->ID;
